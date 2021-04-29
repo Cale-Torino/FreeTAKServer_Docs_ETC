@@ -1,0 +1,90 @@
+--------------------------------------------------------------------------------------------------
+
+FREETAK SERVER INSTALL ON RASPBERRYPI OS
+
+INSTALL PYTHON 3
+
+sudo apt update
+sudo apt install python3 idle3
+
+https://www.raspberrypi.org/documentation/linux/usage/commands.md
+
+python -V
+
+cd /
+
+/usr/local/lib/python3.7/dist-packages
+
+ifconfig
+
+10.0.0.13
+
+------------
+
+IN
+
+cd /usr/local/lib/python3.7/dist-packages
+
+$ sudo python3 -m pip install FreeTAKServer[ui]
+
+------------
+
+IN
+
+cd /usr/local/lib/python3.7/dist-packages
+
+
+$ sudo nano FreeTAKServer/controllers/configuration/MainConfig.py
+
+------------
+
+IN
+
+cd /usr/local/lib/python3.7/dist-packages
+
+$ sudo nano FreeTAKServer-UI/config.py
+
+------------
+
+Set up cronjob to run FTS/UI start commands on boot:
+
+$ crontab -e
+
+
+@reboot nohup sudo python3 -m FreeTAKServer.controllers.services.FTS &
+
+@reboot nohup sudo FLASK_APP=/usr/local/lib/python3.7/dist-packages/FreeTAKServer-UI/run.py python3 /usr/local/lib/python3.7/dist-packages/FreeTAKServer-UI/run.py &
+
+
+------------
+
+Start each of them on a new terminal window
+
+SERVER START COMMAND
+
+$ sudo python3 -m FreeTAKServer.controllers.services.FTS
+
+UI START COMMAND
+
+$ sudo FLASK_APP=/usr/local/lib/python3.7/dist-packages/FreeTAKServer-UI/run.py python3 /usr/local/lib/python3.7/dist-packages/FreeTAKServer-UI/run.py 
+
+browse to
+
+U= admin
+P= password
+http://10.0.0.13:5000
+
+------------
+
+
+STATIC IP
+
+/etc/dhcpcd.conf
+
+
+
+
+
+
+
+

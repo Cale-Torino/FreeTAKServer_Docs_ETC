@@ -1,0 +1,112 @@
+
+Install DietPi, setup SSH & Python3, setup static IP
+
+https://pypi.org/project/FreeTAKServer/
+
+--------------------------------
+
+update DietPi
+```
+sudo apt update
+```
+
+--------------------------------
+
+check python
+```
+Python3
+```
+
+Python 3.7.3 
+
+--------------------------------
+
+Now browse to `/usr/local/lib/python3.7/dist-packages` in the terminal:
+```
+cd /
+
+cd /usr/local/lib/python3.7/dist-packages
+```
+
+--------------------------------
+
+Once in `/usr/local/lib/python3.7/dist-packages` run the command below:
+```
+LATEST
+sudo python3 -m pip install FreeTAKServer[ui]
+
+FOR OLDER
+sudo python3 -m pip install FreeTAKServer==1.3.0.6
+sudo apt install python3-dev python3-setuptools build-essential python3-gevent python3-lxml libcairo2-dev
+sudo pip3 install wheel pycairo
+```
+
+pip check FreeTakServer
+
+--------------------------------
+
+After the installation has finished open the `MainConfig.py` file for editing
+```
+cd /usr/local/lib/python3.7/dist-packages
+sudo nano FreeTAKServer/controllers/configuration/MainConfig.py
+```
+
+--------------------------------
+
+When finished configuring `MainConfig.py` open the `config.py` file for editing
+```
+cd /usr/local/lib/python3.7/dist-packages
+sudo nano FreeTAKServer-UI/config.py
+```
+
+--------------------------------
+
+In order to run the server and the GUI two terminal windows must be opened and the commands below must be run:
+
+```
+SERVER START COMMAND
+sudo python3 -m FreeTAKServer.controllers.services.FTS
+
+UI START COMMAND
+sudo FLASK_APP=/usr/local/lib/python3.7/dist-packages/FreeTAKServer-UI/run.py python3 /usr/local/lib/python3.7/dist-packages/FreeTAKServer-UI/run.py 
+```
+
+--------------------------------
+
+
+If you would like to setup a cronjob (for server start on boot) use the commands below:
+
+Set up cronjob to run FTS/UI start commands on boot:
+
+```
+crontab -e
+
+@reboot nohup sudo python3 -m FreeTAKServer.controllers.services.FTS &
+
+@reboot nohup sudo FLASK_APP=/usr/local/lib/python3.7/dist-packages/FreeTAKServer-UI/run.py python3 /usr/local/lib/python3.7/dist-packages/FreeTAKServer-UI/run.py &
+```
+
+--------------------------------
+
+
+To uninstall do:
+
+```
+cd /usr/local/lib/python3.7/dist-packages
+pip uninstall FreeTAKServer
+pip uninstall FreeTAKServer-UI
+
+```
+
+sudo  rm /root/FTSDataBase.db
+
+
+
+
+
+
+
+
+
+
+
