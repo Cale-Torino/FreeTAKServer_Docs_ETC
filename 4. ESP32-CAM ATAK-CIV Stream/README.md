@@ -99,6 +99,8 @@ Also note only 1 stream can be active at a time using this sketch.
 
 Now you can easily add the stream to ATAK-CIV (forward the correct ports when using outside your localhost network)
 
+You can also add the stream to a sensor on the map (such as a static camera)
+
 [<img src="img/add.jpeg" width="800"/>](img/add.jpeg)
 
 ### Example Vid
