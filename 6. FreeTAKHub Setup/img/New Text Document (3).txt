@@ -1,0 +1,52 @@
+https://www.techunits.com/topics/setup-guides/step-by-step-guide-to-install-node-red-on-ubuntu-18-04-lts/
+
+
+sudo apt-get update
+
+sudo apt-get install nodejs
+
+sudo apt-get install npm
+
+node -v
+
+sudo npm install -g --unsafe-perm node-red node-red-admin
+
+sudo ufw allow 1880
+
+node-red
+
+http://127.0.0.1:1880
+
+
+under settings > Manage Palette > install
+
+install the following modules
+
+node-red-contrib-multifeed-parser
+node-red-contrib-telegrambot
+node-red-contrib-web-worldmap
+
+
+npm outdated
+
+npm install node-red-contrib-multifeed-parser@latest
+
+npm install node-red-contrib-telegrambot@latest
+
+npm install node-red-contrib-web-worldmap@latest
+
+
+
+navigate to your download dir
+
+sudo chmod +x packaging-webmap-linux
+
+edit the JSON file webMAP_config.json set the
+
+"FTH_FTS_URL": "[YOUR_FTS_IP]" "FTH_FTS_TCP_Port": [YOUR_FTS_PORT]
+
+./[package_name] /[PATHTOCONFIGURATIONFILE]/webMAP_config.json
+
+./packaging-webmap-linux /home/boii/Downloads/webMAP_config.json
+
+http://127.0.0.1:8000/tak-map
