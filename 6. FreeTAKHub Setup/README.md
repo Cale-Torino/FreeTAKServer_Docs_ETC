@@ -119,4 +119,4 @@ Go to *http://127.0.0.1:8000/tak-map*
     - FreeTAKHub: https://github.com/FreeTAKTeam/FreeTAKHub
     - FreeTAKHub releases: https://github.com/FreeTAKTeam/FreeTAKHub/releases
     - FreeTAKTeam: https://github.com/FreeTAKTeam
-    - Walk-through: 
+    - Walk-through: https://github.com/Cale-Torino/FreeTAKServer_Docs_ETC/tree/main/6.%20FreeTAKHub%20Setup
