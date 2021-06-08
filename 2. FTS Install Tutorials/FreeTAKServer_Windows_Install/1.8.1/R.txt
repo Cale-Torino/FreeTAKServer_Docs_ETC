@@ -1,0 +1,103 @@
+![FTS Logo](img/All_FreeTAK_Techrad_IQ_Blue.png)
+
+Install python from python.org
+
+include environment variables
+
+pip install flask
+pip install flask_login
+pip install flask_migrate
+pip install flask_wtf
+pip install flask_sqlalchemy
+pip install email_validator
+pip install gunicorn
+
+pip install coveralls
+pip install coverage
+pip install pytest
+pip install flake8
+pip install flake8-print
+pip install pep8-naming
+pip install selenium
+pip install -r requirements.txt
+
+
+
+pip uninstall FreeTAKServer
+pip uninstall FreeTAKServer-UI
+
+
+python -m pip install FreeTAKServer[ui]
+
+C:\Software\python\Lib\site-packages\FreeTAKServer\controllers\configuration\MainConfig.py
+
+C:\Software\python\Lib\site-packages\FreeTAKServer-UI\config.py
+
+C:\Software\python\Lib\site-packages\FreeTAKServer-UI\run.py
+
+--------------------------
+
+https://palletsprojects.com/p/flask/
+
+set FLASK_APP=run.py
+
+FLASK_APP=run.py python3 run.py
+
+flask run
+
+http://localhost:5000/
+
+FLASK_APP=run.py python run.py
+
+python -m FreeTAKServer.controllers.services.FTS
+
+C:\Software\python\Lib\site-packages\FreeTAKServer>python -m FreeTAKServer.controllers.services.FTS
+
+--------------------------
+
+
+@ECHO ON
+"Path where your Python exe is stored\python.exe" "Path where your Python script is stored\script name.py"
+pause
+
+--------------------------
+
+
+FreeTAKServer Manager
+
+* download and install python & pip in folder
+
+* find python folder
+
+* check python -V, pip --version
+
+* instal requirements
+
+flask
+flask_login
+flask_migrate
+flask_wtf
+flask_sqlalchemy
+email_validator
+gunicorn
+coveralls
+coverage
+pytest
+flake8
+flake8-print
+pep8-naming
+selenium
+
+pip install -r requirements.txt
+
+* install FTS
+
+python -m pip install FreeTAKServer[ui]
+
+* overwrite {python_dir}\Lib\site-packages\FreeTAKServer\controllers\configuration\MainConfig.py
+
+* overwrite {python_dir}\Lib\site-packages\FreeTAKServer-UI\config.py
+
+Start, Stop, Restart, Uninstall, Install, edit MainConfig.py & config.py, check ports buttons.
+
+--------------------------
