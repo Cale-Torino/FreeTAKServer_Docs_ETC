@@ -1,10 +1,10 @@
 # FreeTAKServer Install On Windows Computer
 
-Below is the installation commands and comments for the installation of FreeTAKServer on a windows computer:
+Below is the installation commands and comments for the installation of FreeTAKServer `version 1.8.1` on a windows computer:
 
 -----------
 
-## Install Instructions (Tested on Server Version 1.7.5. and UI v1.5.10)
+## Install Instructions (Tested on Server Version 1.8.1. and UI v1.8.1)
 
 1. 
 
@@ -34,66 +34,31 @@ Now check that python and pip are installed and working correctly. *You should b
 
 ```
 > python -V
+```
 
+should show:
+> `Python 3.9.5`
+
+```
 > pip --version
 ```
+should show:
+> `C:\Users\PCName>pip --version`
+
+> `pip 21.1.1 from J:\python\lib\site-packages\pip (python 3.9)`
+
 
 [<img src="img/chkpypip.jpg" width="800"/>](img/chkpypip.jpg)
 
 3. 
 
-Once you have checked that Python and pip are working install the requirements:
+Once you have checked that Python and pip are working the requirements are **no longer** installed manually.
 
-3.1. 
-Run install one by one.
-```
-> pip install flask
-> pip install flask_login
-> pip install flask_migrate
-> pip install flask_wtf
-> pip install flask_sqlalchemy
-> pip install email_validator
-> pip install gunicorn
-
-> pip install coveralls
-> pip install coverage
-> pip install pytest
-> pip install flake8
-> pip install flake8-print
-> pip install pep8-naming
-> pip install selenium
-```
-
-3.2. 
-Run install from a file.
-
-From a file Paste these requirements into a .txt file `requirements.txt` for example:
-```
-flask
-flask_login
-flask_migrate
-flask_wtf
-flask_sqlalchemy
-email_validator
-gunicorn
-coveralls
-coverage
-pytest
-flake8
-flake8-print
-pep8-naming
-selenium
-```
-
-now CD into the directory which containes said `requirements.txt` file and run the command below:
-
-```
-pip install -r requirements.txt
-```
+So the requirements install step can be skipped.
 
 4. 
 
-When all the requirements have been satisfied install the FreeTAKServer.
+Install the FreeTAKServer.
 
 ```
 > python -m pip install FreeTAKServer[ui]
@@ -116,6 +81,7 @@ Edited contents for windows machines:
 
 import os
 
+import yaml
 currentPath = os.path.dirname(os.path.abspath(__file__))
 from pathlib import Path
 
@@ -125,47 +91,98 @@ class MainConfig:
     this is the main configuration file and is the only one which
     should need to be changed
     """
-    # this is the port to which clients will connect
-    CoTServicePort = int(os.environ.get('FTS_COT_PORT', 8087))
 
-    SSLCoTServicePort = int(os.environ.get('FTS_SSLCOT_PORT', 8089))
 
-    # this needs to be changed for private data packages to work
-    DataPackageServiceDefaultIP = str(os.environ.get('FTS_DP_ADDRESS', "0.0.0.0"))
+    #
+    AlternateConfig = str(os.environ.get('FTS_CONFIG_PATH', 'F:\\python\\Lib\\site-packages\\FreeTAKServer\\FTSConfig.yaml'))
 
-    # User Connection package IP needs to be set to the IP which is used when creating the connection in your tak device
-    UserConnectionIP = str(os.environ.get('FTS_USER_ADDRESS', "0.0.0.0"))
+    #python_version = 'python3.8'
 
-    #Path to the site-packages dir in your python installation
-    python_install_path = 'C:\\Software\\python\\Lib\\site-packages'
+    #userpath = '/usr/local/lib/'
 
-    # api port
-    APIPort = os.environ.get('FTS_API_PORT', 19023)
+    if os.path.exists(AlternateConfig):
+        content = open(AlternateConfig).read()
+        yamlConfig = yaml.safe_load(content)
 
-    # Federation port
-    FederationPort = os.environ.get('FTS_FED_PORT', 9000)
+        # this is the port to which clients will connect
+        CoTServicePort = int(os.environ.get('FTS_COT_PORT', yamlConfig['CoTServicePort']))
 
-    # api IP
-    APIIP = os.environ.get('FTS_API_ADDRESS', '0.0.0.0')
+        SSLCoTServicePort = int(os.environ.get('FTS_SSLCOT_PORT', yamlConfig['SSLCoTServicePort']))
+
+        # this needs to be changed for private data packages to work
+        DataPackageServiceDefaultIP = str(os.environ.get('FTS_DP_ADDRESS', yamlConfig['DataPackageServiceDefaultIP']))
+
+        # User Connection package IP needs to be set to the IP which is used when creating the connection in your tak device
+        UserConnectionIP = str(os.environ.get('FTS_USER_ADDRESS', yamlConfig["UserConnectionIP"]))
+
+        DBFilePath = str(os.environ.get('FTS_DB_PATH', yamlConfig["DBFilePath"]))
+
+        # whether or not to save CoT's to the DB
+        SaveCoTToDB = bool(os.environ.get('FTS_COT_TO_DB', yamlConfig["SaveCoTToDB"]))
+
+        # api port
+        APIPort = os.environ.get('FTS_API_PORT', yamlConfig["APIPort"])
+
+        # Federation port
+        FederationPort = os.environ.get('FTS_FED_PORT', yamlConfig["FederationPort"])
+
+        # api IP
+        APIIP = os.environ.get('FTS_API_ADDRESS', yamlConfig["APIIP"])
+
+        if "MainPath" in yamlConfig.keys():
+            MainPath = str(Path(yamlConfig["MainPath"]))
+        else:
+            MainPath = str(Path(fr'F:\\python\\Lib\\site-packages\\FreeTAKServer'))
+
+        if "CertsPath" in yamlConfig.keys():
+            certsPath = os.environ.get('FTS_CERTS_PATH', yamlConfig["CertsPath"])
+        else:
+            certsPath = os.environ.get('FTS_CERTS_PATH', fr'{MainPath}\\certs')
+
+    else:
+        # this is the port to which clients will connect
+        CoTServicePort = int(os.environ.get('FTS_COT_PORT', 8087))
+
+        SSLCoTServicePort = int(os.environ.get('FTS_SSLCOT_PORT', 8089))
+
+        # this needs to be changed for private data packages to work
+        DataPackageServiceDefaultIP = str(os.environ.get('FTS_DP_ADDRESS', "0.0.0.0"))
+
+        # User Connection package IP needs to be set to the IP which is used when creating the connection in your tak device
+        UserConnectionIP = str(os.environ.get('FTS_USER_ADDRESS', "0.0.0.0"))
+
+        # api port
+        APIPort = os.environ.get('FTS_API_PORT', 19023)
+
+        # Federation port
+        FederationPort = os.environ.get('FTS_FED_PORT', 9000)
+
+        # api IP
+        APIIP = os.environ.get('FTS_API_ADDRESS', '0.0.0.0')
+
+        # whether or not to save CoT's to the DB
+        SaveCoTToDB = bool(os.environ.get('FTS_COT_TO_DB', True))
+
+        # this should be set before startup
+        DBFilePath = str(os.environ.get('FTS_DB_PATH', r'F:\\python\\Lib\\site-packages\\FreeTAKServer\\FTSDataBase.db'))
+
+        MainPath = str(Path(fr'F:\\python\\Lib\\site-packages\\FreeTAKServer'))
+
+        certsPath = os.environ.get('FTS_CERTS_PATH', fr'{MainPath}\\certs')
+
+    # the version information of the server (recommended to leave as default)
+    version = 'FreeTAKServer-1.8.1 RC 1 Public'
+
+    # number of milliseconds to wait between each iteration of main loop
+    # decreasing will increase CPU usage and server performance
+    # increasing will decrease CPU usage and server performance
+    MainLoopDelay = 1/1000
 
     # allowed ip's to access CLI commands
     AllowedCLIIPs = ['127.0.0.1']
 
     # IP for CLI to access
     CLIIP = '127.0.0.1'
-
-    # whether or not to save CoT's to the DB
-    SaveCoTToDB = bool(os.environ.get('FTS_COT_TO_DB', True))
-
-    # this should be set before startup
-
-    DBFilePath = str(os.environ.get('FTS_DATA_PATH', r'{python_install_path}\\FreeTAKServer\\') + "FTSDataBase.db")
-
-    # the version information of the server (recommended to leave as default)
-    version = 'FreeTAKServer-1.7.5 Public'
-
-    MainPath = str(os.environ.get('FTS_DATA_PATH',
-        Path(fr'{python_install_path}\\FreeTAKServer')))
 
     ExCheckMainPath = str(Path(fr'{MainPath}\\ExCheck'))
 
@@ -186,6 +203,7 @@ class MainConfig:
 
     certsPath = os.environ.get('FTS_CERTS_PATH', fr'{MainPath}\\certs')
 
+
     keyDir = str(Path(fr'{certsPath}\\pubserver.key'))
 
     pemDir = str(Path(fr'{certsPath}\\pubserver.pem'))  # or crt
@@ -200,14 +218,12 @@ class MainConfig:
     federationCert = str(Path(fr'{certsPath}\\pubserver.pem'))
     federationKey = str(Path(fr'{certsPath}\\pubserver.key'))
     federationKeyPassword = str(os.environ.get('FTS_FED_PASSWORD','defaultpass'))
-    
     # location to backup client packages
     clientPackages = str(Path(fr'{MainPath}\\certs\\ClientPackages'))
 
     password = str(os.environ.get('FTS_PASSWORD', 'defaultpass'))
 
     websocketkey = os.environ.get('FTS_WEBSOCKET_KEY', "YourWebsocketKey")
-
 
 ```
 
@@ -239,14 +255,11 @@ class Config(object):
 
     SECRET_KEY = 'key'
 
-        #Path to the site-packages dir in your python installation
-    python_install_path = 'C:\\Software\\python\\Lib\\site-packages\\'
-
     # This will connect to the FTS db
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + python_install_path + 'FreeTAKServer\\FTSDataBase.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + 'F:\\python\\Lib\\site-packages\\FreeTAKServer\\FTSServer-UI.db'
 
     # certificates path
-    certpath = + python_install_path + "FreeTAKServer\\certs\\"
+    certpath = "F:\\python\\Lib\\site-packages\\FreeTAKServer\\certs\\"
 
     # crt file path
     crtfilepath = f"{certpath}pubserver.pem"
@@ -255,13 +268,19 @@ class Config(object):
     keyfilepath = f"{certpath}pubserver.key.unencrypted"
 
     # this IP will be used to connect with the FTS API
-    IP = '127.0.0.1'
+    IP = '10.0.0.60'
 
     # Port the  UI uses to communicate with the API
     PORT = '19023'
 
     # the public IP your server is exposing
-    APPIP = '127.0.0.1'
+    APPIP = '10.0.0.60'
+
+    # webmap IP
+    WEBMAPIP = "127.0.0.1"
+
+    # webmap port
+    WEBMAPPORT = 8000
 
     # this port will be used to listen
     APPPort = 5000
@@ -311,7 +330,6 @@ config_dict = {
     'Production': ProductionConfig,
     'Debug': DebugConfig
 }
-
 
 ```
 
