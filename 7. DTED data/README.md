@@ -14,6 +14,8 @@ follow the `GM_DTED_GUIDE.pdf` to convert the SRTM data to DTED data.
 
 [<img src="img/SRTM.png" width="500"/>](img/SRTM.png)
 
+[<img src="img/convert.png" width="500"/>](img/convert.png)
+
 ---
 
 - Links
