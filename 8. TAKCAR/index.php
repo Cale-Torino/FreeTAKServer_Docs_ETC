@@ -126,7 +126,6 @@ function testFunction(){
     role: "Team Member",
     team: "Yellow"};//JSON object
 
-    //http://vms.safe-tvigil.com:19023/manageAPI/getHelp
   xhr.open('POST', 'http://127.0.0.1:19023/ManagePresence/postPresence', true); // open a GET request
   xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');//application/json;charset=UTF-8
   xhr.setRequestHeader('Authorization', Authorization);//application/json;charset=UTF-8

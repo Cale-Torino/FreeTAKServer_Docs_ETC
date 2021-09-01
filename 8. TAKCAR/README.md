@@ -1,5 +1,7 @@
 # TAKCAR
 
+[<img src="img/f12.png" width="800"/>](img/f12.png)
+
 Quick and dirty example of importing **Traccar** `Lon`, `Lat` coordinates into the **FreeTakServer**.
 
 On page load the script automatically begins a loop getting lat,lon from *Traccar* and posting them to *FTS*.
